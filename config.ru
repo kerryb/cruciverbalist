@@ -7,7 +7,15 @@ set :twitter_oauth_config, key: ENV["consumer-key"],
 
 get "/" do
   login_required
-  "Hello #{user}!"
+  <<-EOF
+  Hello #{user.inspect}!
+
+  Session:
+
+  <pre>
+    #{session.inspect}
+  </pre>
+  EOF
 end
 
 run Sinatra::Application
