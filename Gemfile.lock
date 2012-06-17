@@ -20,6 +20,8 @@ GEM
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
+    rack-proxy (0.3.7)
+      rack
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rubyzip (0.9.8)
@@ -39,6 +41,7 @@ PLATFORMS
 
 DEPENDENCIES
   heroku
+  rack-proxy
   sinatra
   sinatra-twitter-oauth
   twitter_oauth
