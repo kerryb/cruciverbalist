@@ -8,7 +8,7 @@ class GuardianProxy < Rack::Proxy
 
   def call env
     request = Rack::Request.new env
-    if request.path =~ %r{^/crosswords/}
+    if request.path =~ %r{^/crosswords}
       super
     else
       @app.call env
