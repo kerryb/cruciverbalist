@@ -32,6 +32,7 @@ class GuardianProxy < Rack::Proxy
     new_body = raw_body.to_s.gsub "http://www.guardian.co.uk/crosswords/", "#{BASE_URL}/crosswords/"
     headers["Content-Length"] = new_body.length.to_s
     headers.delete "content-encoding"
+    headers.delete "transfer-encoding"
     [status, headers, [new_body]]
   end
 end
