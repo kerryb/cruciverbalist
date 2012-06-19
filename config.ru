@@ -16,4 +16,7 @@ get "/" do
   "Hello #{user.screen_name}!"
 end
 
+get "/chat" do
+  haml :chat
+end
 run Sinatra::Application
