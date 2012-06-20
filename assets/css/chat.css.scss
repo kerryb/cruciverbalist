@@ -1,7 +1,15 @@
 #conversation {
   border: 1px solid #ccc;
-  height: 500px;
+  height: 300px;
   width: 300px;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style-type: none;
+    padding: 3px 6px;
+  }
 }
 
 #new-message {
