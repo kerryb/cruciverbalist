@@ -3,7 +3,7 @@ require "sinatra-twitter-oauth"
 require "./guardian_proxy"
 require 'sprockets'
 
-BASE_URL = ENV["base-url"] || "http://localhost:9292"
+BASE_URL = ENV["base-url"] || "http://cruciverbalist.dev"
 
 set :twitter_oauth_config, key: ENV["consumer-key"],
   secret: ENV["consumer-secret"],
