@@ -31,6 +31,7 @@ get "/" do
 end
 
 get "/chat" do
+  @messages = Message.all
   haml :chat
 end
 

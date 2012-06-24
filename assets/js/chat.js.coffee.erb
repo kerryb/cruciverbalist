@@ -12,6 +12,10 @@ $ ->
     tagname: "li"
     template: $("#message-template").template()
 
+    initialize: ->
+      _.bindAll this, "render"
+      @model.bind "change", @render
+
     render: ->
       conversation_list = $("#conversation")
       element = jQuery.tmpl(@template, @model.toJSON())
@@ -23,8 +27,9 @@ $ ->
     el: $("#chat")
 
     initialize: ->
-      _.bindAll this, "addMessage"
-      @conversation = new Conversation null, view: this
+      _.bindAll this, "addMessage", "addAllMessages"
+      @conversation = new Conversation <%= Message.all.to_json %>, view: this
+      @addAllMessages()
       @input = @$("#new-message")
       @input.focus()
 
@@ -42,5 +47,8 @@ $ ->
     addMessage: (message) ->
       view = new MessageView(model: message)
       @$("#conversation").append view.render().el
+
+    addAllMessages: ->
+      @conversation.each @addMessage
 
   appview = new AppView
