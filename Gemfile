@@ -1,8 +1,10 @@
 source "http://rubygems.org"
 
+gem "bson_ext"
 gem "coffee-script"
 gem "haml"
 gem "heroku"
+gem "mongo_mapper"
 gem "rack-proxy"
 gem "sass"
 gem "sinatra"

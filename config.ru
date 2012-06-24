@@ -1,7 +1,12 @@
+require "json"
 require "sinatra"
 require "sinatra-twitter-oauth"
-require "./guardian_proxy"
-require 'sprockets'
+require "sprockets"
+
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require "db"
+require "guardian_proxy"
+require "message"
 
 BASE_URL = ENV["base-url"] || "http://cruciverbalist.dev"
 
@@ -28,4 +33,10 @@ end
 get "/chat" do
   haml :chat
 end
+
+post "/chat/messages" do
+  message = Message.create JSON.parse(request.body.read)
+  message.to_json
+end
+
 run Sinatra::Application
