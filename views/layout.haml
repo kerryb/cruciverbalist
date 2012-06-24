@@ -1,12 +1,13 @@
 %html
   %head
     %title Cruciverbalist
-    %link{href: "/assets/chat.css", rel: "stylesheet", type: "text/css"}
-    %script{src: "/assets/json2.js"}
-    %script{src: "/assets/jquery.js"}
-    %script{src: "/assets/jquery.tmpl.js"}
-    %script{src: "/assets/underscore.js"}
-    %script{src: "/assets/backbone.js"}
+    %link{href: "/assets/css/chat.css", rel: "stylesheet", type: "text/css"}
+    %script{src: "/assets/js/lib/json2.js"}
+    %script{src: "/assets/js/lib/jquery.js"}
+    %script{src: "/assets/js/lib/jquery.tmpl.js"}
+    %script{src: "/assets/js/lib/underscore.js"}
+    %script{src: "/assets/js/lib/firehose.js"}
+    %script{src: "/assets/js/lib/backbone.js"}
     %body
       = yield
-      %script{src: "/assets/chat.js"}
+      %script{src: "/assets/js/chat.js"}

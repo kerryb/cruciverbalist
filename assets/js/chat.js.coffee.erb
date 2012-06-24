@@ -12,10 +12,6 @@ $ ->
     tagname: "li"
     template: $("#message-template").template()
 
-    initialize: ->
-      _.bindAll this, "render"
-      @model.bind "change", @render
-
     render: ->
       conversation_list = $("#conversation")
       element = jQuery.tmpl(@template, @model.toJSON())
@@ -27,9 +23,9 @@ $ ->
     el: $("#chat")
 
     initialize: ->
-      _.bindAll this, "addMessage", "addAllMessages"
+      _.bindAll this, "addMessage"
       @conversation = new Conversation <%= Message.all.to_json %>, view: this
-      @addAllMessages()
+      @conversation.each @addMessage
       @input = @$("#new-message")
       @input.focus()
 
@@ -48,7 +44,10 @@ $ ->
       view = new MessageView(model: message)
       @$("#conversation").append view.render().el
 
-    addAllMessages: ->
-      @conversation.each @addMessage
-
   appview = new AppView
+
+  new Firehose.Consumer(
+    uri: "/chat/messages"
+    message: (json) ->
+      @conversation.add json
+  ).connect()

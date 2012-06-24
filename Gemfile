@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem "bson_ext"
 gem "coffee-script"
+gem "firehose"
 gem "haml"
 gem "heroku"
 gem "mongo_mapper"
