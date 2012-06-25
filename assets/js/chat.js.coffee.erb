@@ -5,9 +5,6 @@ $ ->
   window.Conversation = Backbone.Collection.extend
     model: Message
 
-    initialize: (models, options) ->
-      @bind "add", options.view.addMessage
-
   MessageView = Backbone.View.extend
     tagname: "li"
     template: $("#message-template").template()
