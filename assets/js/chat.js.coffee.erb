@@ -50,6 +50,5 @@ $ ->
     uri: "://localhost:7474/chat"
 
     message: (json) ->
-      console.log "Received: #{json}"
       appview.addMessage new Message(json)
   ).connect()

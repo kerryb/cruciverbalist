@@ -11,6 +11,7 @@ require "guardian_proxy"
 require "message"
 
 BASE_URL = ENV["base-url"] || "http://cruciverbalist.dev"
+FIREHOSE_PRODUCER = Firehose::Producer.new("//localhost:7474")
 
 set :twitter_oauth_config,
   key: ENV["consumer-key"],
