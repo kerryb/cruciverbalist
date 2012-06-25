@@ -10,16 +10,14 @@ require "db"
 require "guardian_proxy"
 require "message"
 
-BASE_URL = ENV["base-url"] || "http://cruciverbalist.dev"
+BASE_URL = ENV["BASE_URL"] || "http://cruciverbalist.dev"
 FIREHOSE_PRODUCER = Firehose::Producer.new("//localhost:7474")
 
 set :twitter_oauth_config,
-  key: ENV["consumer-key"],
-  secret: ENV["consumer-secret"],
+  key: ENV["CONSUMER_KEY"],
+  secret: ENV["CONSUMER_SECRET"],
   callback: "#{BASE_URL}/auth",
-  login_template: {text: %{<a href="#{BASE_URL}/connect">Sign in with Twitter</a>}}
-
-use GuardianProxy
+  login_template: {text: %{<a href="#{BASE_URL}/connect">Log in with Twitter</a>}}
 
 map "/assets" do
   environment = Sprockets::Environment.new
@@ -35,14 +33,24 @@ get "/" do
   "Hello #{user.screen_name}!"
 end
 
+get "/session" do
+  session.map {|k,v| "#{k.inspect} => #{v.inspect}\n" }
+end
+
 get "/chat" do
+  login_required
   @messages = Message.all
+  @username = user.screen_name
   haml :chat
 end
 
 post "/chat/messages" do
-  message = Message.create JSON.parse(request.body.read)
+  login_required
+  message = Message.create JSON.parse(request.body.read).merge username:(user.screen_name)
   message.to_json
 end
 
+enable :sessions
+
+use GuardianProxy
 run Sinatra::Application

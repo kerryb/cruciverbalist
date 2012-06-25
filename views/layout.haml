@@ -4,4 +4,7 @@
     %link{href: "/assets/css/chat.css", rel: "stylesheet", type: "text/css"}
     %script{src: "/assets/js/application.js"}
     %body
-      = yield
+    #session
+      = @username
+      %a{href: "/logout"} log out
+    = yield
