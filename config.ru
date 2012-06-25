@@ -22,6 +22,9 @@ use GuardianProxy
 
 map "/assets" do
   environment = Sprockets::Environment.new
+  gem_path = Gem.loaded_specs["firehose"].full_gem_path
+  environment.append_path File.join(gem_path, "lib/assets/flash")
+  environment.append_path File.join(gem_path, "lib/assets/javascripts")
   environment.append_path "assets"
   run environment
 end

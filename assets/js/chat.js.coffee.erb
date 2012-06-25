@@ -47,7 +47,9 @@ $ ->
   appview = new AppView
 
   new Firehose.Consumer(
-    uri: "/chat/messages"
+    uri: "://localhost:7474/chat"
+
     message: (json) ->
+      console.log "Received: #{json}"
       @conversation.add json
   ).connect()
