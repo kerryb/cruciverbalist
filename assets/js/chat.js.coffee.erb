@@ -42,10 +42,3 @@ $ ->
       @$("#conversation").append view.render().el
 
   appview = new AppView
-
-  new Firehose.Consumer(
-    uri: "://localhost:7474/chat"
-
-    message: (json) ->
-      appview.addMessage new Message(json)
-  ).connect()

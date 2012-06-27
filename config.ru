@@ -1,6 +1,5 @@
 require "bundler/setup"
 require "json"
-require "firehose"
 require "sinatra"
 require "sinatra-twitter-oauth"
 require "sprockets"
@@ -11,8 +10,6 @@ require "guardian_proxy"
 require "message"
 
 BASE_URL = ENV["BASE_URL"] || "http://cruciverbalist.dev"
-FIREHOSE_URL = ENV["FIREHOSE_URL"] || "//localhost:7474"
-FIREHOSE_PRODUCER = Firehose::Producer.new FIREHOSE_URL
 
 set :twitter_oauth_config,
   key: ENV["CONSUMER_KEY"],
@@ -22,9 +19,6 @@ set :twitter_oauth_config,
 
 map "/assets" do
   environment = Sprockets::Environment.new
-  gem_path = Gem.loaded_specs["firehose"].full_gem_path
-  environment.append_path File.join(gem_path, "lib/assets/flash")
-  environment.append_path File.join(gem_path, "lib/assets/javascripts")
   environment.append_path "assets"
   run environment
 end
