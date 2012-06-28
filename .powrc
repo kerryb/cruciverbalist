@@ -3,6 +3,6 @@ if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".rvmrc" ]; then
   source ".rvmrc"
 fi
 
-if [ -f "config/twitter.conf" ]; then
-  source "config/twitter.conf"
+if [ -f "config/development.conf" ]; then
+  source "config/development.conf"
 fi

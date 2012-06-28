@@ -1,3 +1,0 @@
-Twitter credentials for running locally (use heroku config in production)
-export CONSUMER_KEY=your-consumer-key-here
-export CONSUMER_SECRET=your-consumer-secret-here

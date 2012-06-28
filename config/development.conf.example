@@ -1,0 +1,11 @@
+# Credentials for running locally (called from .powrc).
+# Use heroku config instead in production.
+
+export BASE_URL=http://cruciverbalist.dev
+ 
+export TWITTER_CONSUMER_KEY=your-consumer-key-here
+export TWITTER_CONSUMER_SECRET=your-consumer-secret-here
+
+export PUSHER_APP_ID=your-app-id-here
+export PUSHER_KEY=your-key-here
+export PUSHER_SECRET=your-secret-here
