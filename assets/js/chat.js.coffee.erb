@@ -13,7 +13,9 @@ $ ->
       conversation_list = $("#conversation")
       element = jQuery.tmpl(@template, @model.toJSON())
       $(@el).html element
-      conversation_list.scrollTop(conversation_list.attr("scrollHeight") - conversation_list.height())
+      setTimeout (->
+        conversation_list.scrollTop(conversation_list.attr("scrollHeight") - conversation_list.height())
+      ), 100
       this
 
   AppView = Backbone.View.extend
