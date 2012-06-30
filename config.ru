@@ -31,7 +31,7 @@ end
 
 get "/" do
   login_required
-  "Hello #{user.screen_name}!"
+  redirect "/crosswords"
 end
 
 get "/chat" do
