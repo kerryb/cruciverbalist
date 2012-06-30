@@ -1,4 +1,4 @@
-$ ->
+window.setupChat = ->
   window.Message = Backbone.Model.extend
     url: "/chat/messages"
 
@@ -6,7 +6,7 @@ $ ->
     model: Message
 
   MessageView = Backbone.View.extend
-    tagname: "li"
+    tagName: "li"
     template: $("#message-template").template()
 
     render: ->

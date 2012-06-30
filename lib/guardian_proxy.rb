@@ -30,7 +30,8 @@ class GuardianProxy < Rack::Proxy
                  body
                end
     new_body = raw_body.to_s.gsub("http://www.guardian.co.uk/crosswords/", "#{BASE_URL}/crosswords/"
-                                 ).sub("</body>", '<script src="/assets/js/application.js"></script></body>')
+                                 ).sub("</head>", %{<link rel="stylesheet" type="text/css" src="/assets/css/cruciverbalist.css" /></head>}
+                                 ).sub("</body>", %{<script src="/assets/js/application.js"></script></body>})
     headers["Content-Length"] = new_body.length.to_s
     headers.delete "content-encoding"
     headers.delete "transfer-encoding"

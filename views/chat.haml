@@ -1,8 +1,8 @@
-#chat
-  %ul#conversation
-  %form
-    %textarea#new-message
+%h1 Chat
+%ul#conversation
+%form
+  %textarea#new-message
 
-    %script{type: "text/template", id: "message-template"}
-      %span.username ${username}:
-      ${content}
+  %script{type: "text/template", id: "message-template"}
+    %span.username ${username}:
+    ${content}
