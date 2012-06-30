@@ -29,7 +29,8 @@ class GuardianProxy < Rack::Proxy
                else
                  body
                end
-    new_body = raw_body.to_s.gsub "http://www.guardian.co.uk/crosswords/", "#{BASE_URL}/crosswords/"
+    new_body = raw_body.to_s.gsub("http://www.guardian.co.uk/crosswords/", "#{BASE_URL}/crosswords/"
+                                 ).sub("</body>", '<script src="/assets/js/application.js"></script></body>')
     headers["Content-Length"] = new_body.length.to_s
     headers.delete "content-encoding"
     headers.delete "transfer-encoding"
