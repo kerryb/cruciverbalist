@@ -35,6 +35,12 @@ get "/" do
   redirect request.cookies["requested_page"] || "/crosswords"
 end
 
+get "/header" do
+  login_required
+  @username = user.screen_name
+  haml :header
+end
+
 get "/chat" do
   login_required
   @messages = Message.all
