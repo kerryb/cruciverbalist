@@ -7,6 +7,7 @@ require "sprockets"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require "db"
+require "requested_page"
 require "guardian_proxy"
 require "message"
 
@@ -31,7 +32,7 @@ end
 
 get "/" do
   login_required
-  redirect "/crosswords"
+  redirect request.cookies["requested_page"] || "/crosswords"
 end
 
 get "/chat" do
@@ -50,5 +51,6 @@ end
 
 enable :sessions
 
+use RequestedPage::SaveCookie
 use GuardianProxy
 run Sinatra::Application
