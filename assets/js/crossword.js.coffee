@@ -1,7 +1,6 @@
 setupPage = ->
   $("head").append '<link rel="stylesheet" href="/assets/css/cruciverbalist.css" type="text/css" />'
-  $("#box").siblings().hide()
-  $(".discussion, .crossword-spoiler, .discussion-pagination").hide()
+  $("#header, #promo, .more-in-series, .discussion, .crossword-spoiler, .discussion-pagination").hide()
   $("#box").after "<div id=\"chat\"></div>"
   $("#chat").load "/chat", setupChat
 
