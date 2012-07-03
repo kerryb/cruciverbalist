@@ -1,5 +1,5 @@
 addHeader = ->
-  $("#header").before '<div id="cruciverbalist-header"></div>'
+  $("#wrapper").prepend '<div id="cruciverbalist-header"></div>'
   $("#cruciverbalist-header").load "/header"
 
 setupPage = ->
