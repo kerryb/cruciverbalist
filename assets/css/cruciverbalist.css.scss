@@ -4,6 +4,7 @@ $border-colour: #ccc;
   margin-top: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid $border-colour;
+  background-color: white;
   clear: both;
 }
 
@@ -12,7 +13,7 @@ $border-colour: #ccc;
 
   #conversation {
     border: 1px solid $border-colour;
-    height: 421px;
+    height: 484px;
     width: 300px;
     overflow: auto;
     margin: 0;
