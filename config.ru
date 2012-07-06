@@ -9,6 +9,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require "db"
 require "requested_page"
 require "guardian_proxy"
+require "conversation"
 require "message"
 
 BASE_URL = ENV["BASE_URL"]
@@ -41,17 +42,20 @@ get "/header" do
   haml :header
 end
 
-get "/chat/:crossword" do
+get %r{/chat/(.*)} do |crossword|
   login_required
-  @messages = Message.all
+  @conversation = Conversation.for_crossword(crossword)
+  @messages = @conversation.messages
   @username = user.screen_name
   haml :chat
 end
 
-post "/chat/messages" do
+post "/conversation/:id/messages" do
   login_required
-  message = Message.create JSON.parse(request.body.read).merge username:(user.screen_name)
-  Pusher["cruciverbalist"].trigger "new-chat-message", message: message.to_json
+  conversation = Conversation.find params[:id]
+  content = JSON.parse(request.body.read)["content"]
+  message = conversation.create_message user.screen_name, content
+  Pusher["conversation-#{params[:id]}"].trigger "new-chat-message", message: message.to_json
   message.to_json
 end
 

@@ -1,6 +1,7 @@
 window.setupChat = ->
+  conversationId = $("#conversation").attr("data-id")
   window.Message = Backbone.Model.extend
-    url: "/chat/messages"
+    url: "/conversation/#{conversationId}/messages"
 
   window.Conversation = Backbone.Collection.extend
     model: Message
@@ -23,7 +24,7 @@ window.setupChat = ->
 
     initialize: ->
       _.bindAll this, "addMessage"
-      @conversation = new Conversation <%= Message.all.to_json %>, view: this
+      @conversation = new Conversation [], view: this
       @conversation.each @addMessage
       @input = @$("#new-message")
       @input.focus()
@@ -46,6 +47,6 @@ window.setupChat = ->
   appview = new AppView
 
   pusher = new Pusher "<%= Pusher.key %>"
-  channel = pusher.subscribe "<%= "cruciverbalist" %>"
+  channel = pusher.subscribe "conversation-#{conversationId}"
   channel.bind "new-chat-message", (data) ->
     appview.addMessage new Message(JSON.parse(data.message))
