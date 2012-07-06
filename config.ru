@@ -41,7 +41,7 @@ get "/header" do
   haml :header
 end
 
-get "/chat" do
+get "/chat/:crossword" do
   login_required
   @messages = Message.all
   @username = user.screen_name
