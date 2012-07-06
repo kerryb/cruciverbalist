@@ -10,11 +10,12 @@ $border-colour: #ccc;
 
 #chat {
   float: right;
+  width: 300px;
 
   #conversation {
     border: 1px solid $border-colour;
     height: 484px;
-    width: 300px;
+    width: 295px;
     overflow: auto;
     margin: 0;
     padding: 0;
@@ -27,7 +28,7 @@ $border-colour: #ccc;
 
   #new-message {
     border: 1px solid $border-colour;
-    width: 300px;
+    width: 295px;
     height: 4em;
     margin: 0;
     padding: 2px;
