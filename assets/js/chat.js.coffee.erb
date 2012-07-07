@@ -52,6 +52,6 @@ window.setupChat = ->
   appview = new AppView
 
   pusher = new Pusher "<%= Pusher.key %>"
-  channel = pusher.subscribe "conversation-#{conversationId}"
+  channel = pusher.subscribe "chat-#{conversationId}"
   channel.bind "new-chat-message", (data) ->
     appview.addMessage new Message(JSON.parse(data.message))
