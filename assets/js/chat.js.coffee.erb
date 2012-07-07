@@ -1,10 +1,12 @@
 window.setupChat = ->
   conversationId = $("#conversation").attr("data-id")
+
   window.Message = Backbone.Model.extend
     url: "/conversation/#{conversationId}/messages"
 
   window.Conversation = Backbone.Collection.extend
     model: Message
+    url: "/conversation/#{conversationId}/messages"
 
   MessageView = Backbone.View.extend
     tagName: "li"
@@ -23,9 +25,9 @@ window.setupChat = ->
     el: $("#chat")
 
     initialize: ->
-      _.bindAll this, "addMessage"
+      _.bindAll this, "addMessage", "addAllMessages"
       @conversation = new Conversation [], view: this
-      @conversation.each @addMessage
+      @conversation.fetch success: @addAllMessages
       @input = @$("#new-message")
       @input.focus()
 
@@ -43,6 +45,9 @@ window.setupChat = ->
     addMessage: (message) ->
       view = new MessageView(model: message)
       @$("#conversation").append view.render().el
+
+    addAllMessages: ->
+      @conversation.each @addMessage
 
   appview = new AppView
 

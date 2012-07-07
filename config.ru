@@ -50,6 +50,13 @@ get %r{/chat/(.*)} do |crossword|
   haml :chat
 end
 
+get "/conversation/:id/messages" do
+  login_required
+  conversation = Conversation.find params[:id]
+  messages = conversation.messages
+  messages.to_json
+end
+
 post "/conversation/:id/messages" do
   login_required
   conversation = Conversation.find params[:id]
