@@ -10,6 +10,10 @@ class Conversation
   end
 
   def create_message username, content
-    messages.create username: username, content: content
+    if content.start_with? "/me "
+      messages.create username: username, content: content.sub("/me ", ""), action: true
+    else
+      messages.create username: username, content: content, action: false
+    end
   end
 end

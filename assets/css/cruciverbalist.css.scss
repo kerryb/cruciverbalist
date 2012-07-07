@@ -23,6 +23,14 @@ $border-colour: #ccc;
     li {
       list-style-type: none;
       padding: 3px 6px;
+
+      span.username {
+        font-weight: bold;
+      }
+
+      span.action {
+        font-style: italic;
+      }
     }
   }
 

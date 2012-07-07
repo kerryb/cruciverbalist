@@ -10,11 +10,14 @@ window.setupChat = ->
 
   MessageView = Backbone.View.extend
     tagName: "li"
-    template: $("#message-template").template()
+    messageTemplate: $("#message-template").template()
+    actionTemplate: $("#action-template").template()
 
     render: ->
       conversation_list = $("#conversation")
-      element = jQuery.tmpl(@template, @model.toJSON())
+      console.log @model
+      template = if @model.attributes.action then @actionTemplate else @messageTemplate
+      element = jQuery.tmpl(template, @model.toJSON())
       $(@el).html element
       setTimeout (->
         conversation_list.scrollTop(conversation_list.attr("scrollHeight") - conversation_list.height())

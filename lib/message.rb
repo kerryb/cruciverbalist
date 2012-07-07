@@ -3,6 +3,7 @@ class Message
 
   key :username, String
   key :content, String
+  key :action, Boolean
 
   belongs_to :conversation
 end
