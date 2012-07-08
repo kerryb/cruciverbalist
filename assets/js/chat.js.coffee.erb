@@ -5,22 +5,19 @@ window.setupChat = ->
 conversationId = $("#conversation").attr("data-id")
 
 class Message
-  constructor: (params) ->
-    @username = ko.observable params.username
-    @content = ko.observable params.content
-    @type = ko.observable params.type
+  constructor: (@username, @content, @type) ->
 
 class ChatViewModel
   messages: ko.observableArray [
-    new Message(username: "fred", content: "hello", type: "message"),
-    new Message(username: "bob", content: "waves", type: "action")
+    new Message("fred", "hello", "message"),
+    new Message("bob", "waves", "action")
   ]
 
   newMessage: ko.observable ""
   keyPressed: (data, event) =>
     return true unless event.charCode is 13
     unless @newMessage() is ""
-      @messages.push new Message(username: "kerry", content: @newMessage(), type: "message")
+      @messages.push new Message("kerry", @newMessage(), "message")
     @newMessage ""
 
 setupKnockout = ->
