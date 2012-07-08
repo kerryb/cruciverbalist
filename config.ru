@@ -60,10 +60,9 @@ end
 post "/conversation/:id/messages" do
   login_required
   conversation = Conversation.find params[:id]
-  content = JSON.parse(request.body.read)["content"]
+  content = request.body.read
   message = conversation.create_message user.screen_name, content
   Pusher["chat-#{params[:id]}"].trigger "new-chat-message", message: message.to_json
-  message.to_json
 end
 
 enable :sessions

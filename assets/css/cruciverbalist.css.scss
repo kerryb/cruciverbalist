@@ -24,11 +24,17 @@ $border-colour: #ccc;
       list-style-type: none;
       padding: 3px 6px;
 
-      span.username {
-        font-weight: bold;
+      &.message {
+        span.username {
+          font-weight: bold;
+
+          &:after {
+            content: ":"
+          }
+        }
       }
 
-      span.action {
+      &.action {
         font-style: italic;
       }
     }

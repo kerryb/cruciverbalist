@@ -1,60 +1,36 @@
-window.setupChat = ->
-  conversationId = $("#conversation").attr("data-id")
+window.setupChat = (conversationID) ->
+  conversationURL = "/conversation/#{conversationID}/messages"
+  viewModel = new ChatViewModel conversationURL
+  ko.applyBindings viewModel
+  setupPusher viewModel, "chat-#{conversationID}"
+  loadMessages viewModel, conversationURL
+  $("#new-message").focus()
 
-  window.Message = Backbone.Model.extend
-    url: "/conversation/#{conversationId}/messages"
+class Message
+  constructor: (attrs) ->
+    @username = attrs.username
+    @content = attrs.content
+    @type = attrs.type
 
-  window.Conversation = Backbone.Collection.extend
-    model: Message
-    url: "/conversation/#{conversationId}/messages"
+class ChatViewModel
+  constructor: (@conversationURL) ->
 
-  MessageView = Backbone.View.extend
-    tagName: "li"
-    messageTemplate: $("#message-template").template()
-    actionTemplate: $("#action-template").template()
+  messages: ko.observableArray()
+  newMessage: ko.observable ""
 
-    render: ->
-      conversation_list = $("#conversation")
-      console.log @model
-      template = if @model.attributes.action then @actionTemplate else @messageTemplate
-      element = jQuery.tmpl(template, @model.toJSON())
-      $(@el).html element
-      setTimeout (->
-        conversation_list.scrollTop(conversation_list.attr("scrollHeight") - conversation_list.height())
-      ), 100
-      this
+  keyPressed: (data, event) =>
+    return true unless event.charCode is 13
+    unless @newMessage() is ""
+      $.post @conversationURL, event.target.value
+    $("#conversation").scrollTop $("#conversation").height()
+    @newMessage ""
 
-  AppView = Backbone.View.extend
-    el: $("#chat")
-
-    initialize: ->
-      _.bindAll this, "addMessage", "addAllMessages"
-      @conversation = new Conversation [], view: this
-      @conversation.fetch success: @addAllMessages
-      @input = @$("#new-message")
-      @input.focus()
-
-    events:
-      "keypress #new-message": "createOnEnter"
-
-    createOnEnter: (e) ->
-      return unless e.keyCode is 13
-      value = @input.val()
-      return unless value
-      @conversation.create content: value
-      @input.val ""
-      e.preventDefault()
-
-    addMessage: (message) ->
-      view = new MessageView(model: message)
-      @$("#conversation").append view.render().el
-
-    addAllMessages: ->
-      @conversation.each @addMessage
-
-  appview = new AppView
-
+setupPusher = (viewModel, channel) ->
   pusher = new Pusher "<%= Pusher.key %>"
-  channel = pusher.subscribe "chat-#{conversationId}"
+  channel = pusher.subscribe channel
   channel.bind "new-chat-message", (data) ->
-    appview.addMessage new Message(JSON.parse(data.message))
+    viewModel.messages.push new Message(JSON.parse(data.message))
+
+loadMessages = (viewModel, url) ->
+  $.getJSON url, (data) ->
+    viewModel.messages.push new Message(message) for message in data
