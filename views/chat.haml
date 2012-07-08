@@ -1,11 +1,9 @@
 %h1 Chat
-%ul#conversation{"data-id" => @conversation.id}
-%form
-  %textarea#new-message
 
-  %script{type: "text/template", id: "message-template"}
-    %span.username ${username}:
-    ${content}
+%ul#conversation{"data-id" => @conversation.id, "data-bind" => "foreach: messages"}
+  %li{"data-bind" => "attr: {class: type}"}
+    %span.username{"data-bind" => "text: username"}
+    %span.content{"data-bind" => "text: content"}
 
-  %script{type: "text/template", id: "action-template"}
-    %span.action ${username} ${content}
+%form{"data-bind" => "submit: postMessage"}
+  %textarea#new-message{"data-bind" => "value: newMessage, valueUpdate: 'afterkeydown', event: {keypress: keyPressed}"}
