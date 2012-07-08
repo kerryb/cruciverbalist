@@ -1,6 +1,7 @@
 window.setupChat = ->
   setupKnockout()
   setupPusher()
+  $("#new-message").focus()
 
 conversationId = $("#conversation").attr("data-id")
 
@@ -18,8 +19,7 @@ class ChatViewModel
     return true unless event.charCode is 13
     unless @newMessage() is ""
       @messages.push new Message("kerry", @newMessage(), "message")
-    conversationList = $("#conversation")
-    conversationList.scrollTop(conversationList.height())
+    $("#conversation").scrollTop $("#conversation").height()
     @newMessage ""
 
 setupKnockout = ->
