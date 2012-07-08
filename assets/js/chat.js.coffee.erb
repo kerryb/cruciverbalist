@@ -1,18 +1,15 @@
-window.setupChat = ->
-  setupKnockout()
-  setupPusher()
+window.setupChat = (conversationID) ->
+  viewModel = new ChatViewModel
+  ko.applyBindings viewModel
+  setupPusher "chat-#{conversationID}"
+  loadMessages viewModel, "/conversation/#{conversationID}/messages"
   $("#new-message").focus()
-
-conversationId = $("#conversation").attr("data-id")
 
 class Message
   constructor: (@username, @content, @type) ->
 
 class ChatViewModel
-  messages: ko.observableArray [
-    new Message("fred", "hello", "message"),
-    new Message("bob", "waves", "action")
-  ]
+  messages: ko.observableArray()
 
   newMessage: ko.observable ""
   keyPressed: (data, event) =>
@@ -22,17 +19,13 @@ class ChatViewModel
     $("#conversation").scrollTop $("#conversation").height()
     @newMessage ""
 
-setupKnockout = ->
-  ko.applyBindings(new ChatViewModel)
-
-setupPusher = ->
+setupPusher = (channel) ->
   pusher = new Pusher "<%= Pusher.key %>"
-  channel = pusher.subscribe "chat-#{conversationId}"
+  channel = pusher.subscribe channel
   channel.bind "new-chat-message", (data) ->
     appview.addMessage new Message(JSON.parse(data.message))
 
-
-# url: "/conversation/#{conversationId}/messages"
-# setTimeout (->
-#   conversation_list.scrollTop(conversation_list.attr("scrollHeight") - conversation_list.height())
-# ), 100
+loadMessages = (viewModel, url) ->
+  $.getJSON url, (data) ->
+    for message in data
+      viewModel.messages.push new Message(message.username, message.content, message.type)
