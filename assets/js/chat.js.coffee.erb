@@ -18,6 +18,8 @@ class ChatViewModel
     return true unless event.charCode is 13
     unless @newMessage() is ""
       @messages.push new Message("kerry", @newMessage(), "message")
+    conversationList = $("#conversation")
+    conversationList.scrollTop(conversationList.height())
     @newMessage ""
 
 setupKnockout = ->
