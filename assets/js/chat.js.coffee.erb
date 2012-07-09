@@ -1,9 +1,9 @@
-window.setupChat = (conversationID) ->
-  conversationURL = "/conversation/#{conversationID}/messages"
-  viewModel = new ChatViewModel conversationURL
+window.setupChat = (crosswordID) ->
+  crosswordURL = "/crossword/#{crosswordID}/messages"
+  viewModel = new ChatViewModel crosswordURL
   ko.applyBindings viewModel
-  setupPusher viewModel, "chat-#{conversationID}"
-  loadMessages viewModel, conversationURL
+  setupPusher viewModel, "chat-#{crosswordID}"
+  loadMessages viewModel, crosswordURL
   $("#new-message").focus()
 
 class Message
@@ -13,7 +13,7 @@ class Message
     @type = attrs.type
 
 class ChatViewModel
-  constructor: (@conversationURL) ->
+  constructor: (@crosswordURL) ->
 
   messages: ko.observableArray()
   newMessage: ko.observable ""
@@ -21,7 +21,7 @@ class ChatViewModel
   keyPressed: (data, event) =>
     return true unless event.charCode is 13
     unless @newMessage() is ""
-      $.post @conversationURL, event.target.value
+      $.post @crosswordURL, event.target.value
     $("#conversation").scrollTop $("#conversation").height()
     @newMessage ""
 

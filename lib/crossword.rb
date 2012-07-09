@@ -1,12 +1,12 @@
-class Conversation
+class Crossword
   include MongoMapper::Document
 
-  key :crossword, String
+  key :path, String
 
   many :messages
 
-  def self.for_crossword crossword
-    first_or_create crossword: crossword
+  def self.with_path path
+    first_or_create path: path
   end
 
   def create_message username, content

@@ -8,7 +8,8 @@ addHeader = ->
 setupPage = ->
   $("#header, #promo, .more-in-series, .discussion, .crossword-spoiler, .discussion-pagination").hide()
   $("#box").after "<div id=\"chat\"></div>"
-  $("#chat").load "/chat#{location.pathname}", -> setupChat $("#conversation").attr("data-id")
+  $("#chat").load "/chat#{location.pathname}", ->
+    setupChat $("#conversation").attr("data-id")
 
 $ ->
   addStylesheet()
