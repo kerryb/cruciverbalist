@@ -10,10 +10,9 @@ class Crossword
   end
 
   def create_message username, content
-    if content.start_with? "/me "
-      messages.create username: username, content: content.sub("/me ", ""), type: "action"
-    else
-      messages.create username: username, content: content, type: "message"
+    Message.build(username, content).tap do |message|
+      messages << message
+      save
     end
   end
 end
