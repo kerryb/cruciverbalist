@@ -1,6 +1,8 @@
 %h1 Chat
 
-%ul#conversation{"data-id" => @crossword.id, "data-bind" => "foreach: messages"}
+#info{"data-crossword-id" => @crossword.id}
+
+%ul#conversation{"data-bind" => "foreach: messages"}
   %li{"data-bind" => "attr: {class: type}"}
     %span.username{"data-bind" => "text: username"}
     %span.content{"data-bind" => "text: content"}

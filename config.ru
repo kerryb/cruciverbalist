@@ -42,7 +42,7 @@ get "/header" do
   haml :header
 end
 
-get %r{/chat/(.*)} do |path|
+get %r{/sidebar/(.*)} do |path|
   login_required
   @crossword = Crossword.with_path path
   @messages = @crossword.messages

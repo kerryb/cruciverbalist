@@ -8,9 +8,13 @@ $border-colour: #ccc;
   clear: both;
 }
 
-#chat {
+#cruciverbalist-sidebar {
   float: right;
   width: 300px;
+
+  #info {
+    display: none;
+  }
 
   #conversation {
     border: 1px solid $border-colour;

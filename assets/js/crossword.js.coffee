@@ -7,9 +7,9 @@ addHeader = ->
 
 setupPage = ->
   $("#header, #promo, .more-in-series, .discussion, .crossword-spoiler, .discussion-pagination").hide()
-  $("#box").after "<div id=\"chat\"></div>"
-  $("#chat").load "/chat#{location.pathname}", ->
-    setupChat $("#conversation").attr("data-id")
+  $("#box").after "<div id=\"cruciverbalist-sidebar\"></div>"
+  $("#cruciverbalist-sidebar").load "/sidebar#{location.pathname}", ->
+    setupChat $("#cruciverbalist-sidebar #info").attr("data-crossword-id")
 
 $ ->
   addStylesheet()
