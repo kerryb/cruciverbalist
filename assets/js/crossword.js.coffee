@@ -9,7 +9,9 @@ setupPage = ->
   $("#header, #promo, .more-in-series, .discussion, .crossword-spoiler, .discussion-pagination").hide()
   $("#box").after "<div id=\"cruciverbalist-sidebar\"></div>"
   $("#cruciverbalist-sidebar").load "/sidebar#{location.pathname}", ->
-    setupChat $("#cruciverbalist-sidebar #info").attr("data-crossword-id")
+    crosswordID = $("#cruciverbalist-sidebar #info").attr("data-crossword-id")
+    setupChat crosswordID
+    setupGrid crosswordID
 
 $ ->
   addStylesheet()

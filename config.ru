@@ -11,6 +11,7 @@ require "requested_page"
 require "guardian_proxy"
 require "crossword"
 require "message"
+require "cell"
 
 BASE_URL = ENV["BASE_URL"]
 
@@ -63,6 +64,14 @@ post "/crossword/:id/messages" do
   content = request.body.read
   message = crossword.create_message user.screen_name, content
   Pusher["chat-#{params[:id]}"].trigger "new-chat-message", message: message.to_json
+end
+
+post "/crossword/:crossword_id/grid/:cell_id" do
+  login_required
+  crossword = Crossword.find params[:crossword_id]
+  content = request.body.read
+  cell = crossword.create_cell user.screen_name, params[:cell_id], content
+  Pusher["grid-#{params[:crossword_id]}"].trigger "new-cell", message: cell.to_json
 end
 
 enable :sessions
