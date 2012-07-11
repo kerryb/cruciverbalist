@@ -53,6 +53,11 @@ GEM
       rack
     rack-proxy (0.3.7)
       rack
+    rack-test (0.6.1)
+      rack (>= 1.0)
+    racksh (0.9.11)
+      rack (>= 1.0)
+      rack-test (>= 0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rubyzip (0.9.9)
@@ -85,6 +90,7 @@ DEPENDENCIES
   mongo_mapper
   pusher
   rack-proxy
+  racksh
   sass
   sinatra
   sinatra-twitter-oauth
