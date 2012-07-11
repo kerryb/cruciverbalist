@@ -19,7 +19,6 @@ Pusher.app_id = ENV["PUSHER_APP_ID"]
 Pusher.key = ENV["PUSHER_KEY"]
 Pusher.secret = ENV["PUSHER_SECRET"]
 
-
 set :twitter_oauth_config,
   key: ENV["TWITTER_CONSUMER_KEY"],
   secret: ENV["TWITTER_CONSUMER_SECRET"],
@@ -48,6 +47,7 @@ get %r{/sidebar/(.*)} do |path|
   @crossword = Crossword.with_path path
   @messages = @crossword.messages
   @username = user.screen_name
+  post_message @crossword, @username, "/me has joined"
   haml :chat
 end
 
@@ -62,8 +62,7 @@ post "/crossword/:id/messages" do
   login_required
   crossword = Crossword.find params[:id]
   content = request.body.read
-  message = crossword.create_message user.screen_name, content
-  Pusher["chat-#{params[:id]}"].trigger "new-chat-message", message: message.to_json
+  post_message crossword, user.screen_name, content
 end
 
 post "/crossword/:crossword_id/grid/:cell_id" do
@@ -72,6 +71,13 @@ post "/crossword/:crossword_id/grid/:cell_id" do
   content = request.body.read
   cell = crossword.create_cell user.screen_name, params[:cell_id], content
   Pusher["grid-#{params[:crossword_id]}"].trigger "new-cell", message: cell.to_json
+end
+
+helpers do
+  def post_message crossword, username, content
+    message = crossword.create_message username, content
+    Pusher["chat-#{params[:id]}"].trigger "new-chat-message", message: message.to_json
+  end
 end
 
 enable :sessions
