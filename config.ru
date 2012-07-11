@@ -54,8 +54,7 @@ end
 get "/crossword/:id/messages" do
   login_required
   crossword = Crossword.find params[:id]
-  messages = crossword.messages
-  messages.to_json
+  crossword.messages.to_json
 end
 
 post "/crossword/:id/messages" do
@@ -63,6 +62,12 @@ post "/crossword/:id/messages" do
   crossword = Crossword.find params[:id]
   content = request.body.read
   post_message crossword, user.screen_name, content
+end
+
+get "/crossword/:crossword_id/grid" do
+  login_required
+  crossword = Crossword.find params[:crossword_id]
+  crossword.cells.to_json
 end
 
 post "/crossword/:crossword_id/grid/:cell_id" do

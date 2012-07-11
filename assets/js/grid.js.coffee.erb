@@ -2,6 +2,7 @@ window.setupGrid = (crosswordID) ->
   @gridURL = "/crossword/#{crosswordID}/grid"
   $("#grid input").keyup -> sendValue @id, @value
   setupPusher "grid-#{crosswordID}"
+  loadGrid @gridURL
 
 sendValue = (id, value) ->
   $.post "#{@gridURL}/#{id}", value
@@ -10,5 +11,11 @@ setupPusher = (channel) ->
   pusher = new Pusher "<%= Pusher.key %>"
   channel = pusher.subscribe channel
   channel.bind "new-cell", (data) ->
-    message = JSON.parse(data.message)
-    $("##{message.cell_id}").val message.content
+    setCell JSON.parse(data.message)
+
+loadGrid = (url) ->
+ $.getJSON url, (data) ->
+   setCell message for message in data
+
+setCell = (message) ->
+  $("##{message.cell_id}").val message.content
