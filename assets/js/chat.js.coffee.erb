@@ -19,7 +19,7 @@ class ChatViewModel
   newMessage: ko.observable ""
 
   keyPressed: (data, event) =>
-    return true unless event.charCode is 13
+    return true unless event.keyCode is 13
     unless @newMessage() is ""
       $.post @chatURL, event.target.value
     $("#conversation").scrollTop $("#conversation").height()
