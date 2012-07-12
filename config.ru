@@ -33,7 +33,9 @@ end
 
 get "/" do
   login_required
-  redirect request.cookies["requested_page"] || "/crosswords"
+  # Put back in once https://github.com/kerryb/cruciverbalist/issues/1 fixed
+  #redirect request.cookies["requested_page"] || "/crosswords"
+  redirect "/crosswords"
 end
 
 get "/header" do
