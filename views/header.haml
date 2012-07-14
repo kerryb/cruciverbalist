@@ -1,3 +1,7 @@
-#session
-  = "Hello #{@username}!"
-  %a{href: "/logout"} Log out
+%span#session
+  %i{class: "icon-user"}
+  = @username
+  |
+  %a{href: "/logout"}
+    %i{class: "icon-signout"}
+    Log out

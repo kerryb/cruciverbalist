@@ -1,5 +1,5 @@
 addStylesheet = ->
-  $("head").append '<link rel="stylesheet" href="/assets/css/cruciverbalist.css" type="text/css" />'
+  $("head").append '<link rel="stylesheet" href="/assets/css/application.css" type="text/css" />'
 
 addHeader = ->
   $("#wrapper").prepend '<div id="cruciverbalist-header"></div>'
