@@ -5,8 +5,6 @@ class Message
   key :content, String
   key :type, String
 
-  belongs_to :conversation
-
   def self.build username, content
     if content.start_with? "/me "
       new username: username, content: content.sub("/me ", ""), type: "action"
