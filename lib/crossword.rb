@@ -2,9 +2,10 @@ class Crossword
   include MongoMapper::Document
 
   key :path, String
+  timestamps!
 
-  many :messages
-  many :cells
+  many :messages, order: :updated_at
+  many :cells, order: :updated_at
 
   def self.with_path path
     first_or_create path: path

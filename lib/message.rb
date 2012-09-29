@@ -4,6 +4,7 @@ class Message
   key :username, String
   key :content, String
   key :type, String
+  timestamps!
 
   def self.build username, content
     if content.start_with? "/me "
